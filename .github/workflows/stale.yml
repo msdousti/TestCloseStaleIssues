@@ -3,6 +3,12 @@ name: 'Close stale issues and PRs'
 on:
   schedule:
     - cron: '30 1 * * *'
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write # only for delete-branch option
@@ -15,3 +21,15 @@ jobs:
     steps:
       - name: Close Stale Issues
         uses: actions/stale@v4.1.1
+        with:
+          close-issue-message: 'This issue has automatically been closed due to no activities.'
+          close-pr-message: 'This pull-request has automatically been closed due to no activities.'
+          stale-issue-message: 'This issue has not been updated for a while and will be closed soon.'
+          stale-pr-message: 'This pull-request has not been updated for a while and will be closed soon.'
+          days-before-stale: 1
+          days-before-close: 1
+          exempt-all-milestones: true
+          exempt-issue-labels: security
+          exempt-pr-labels: security
+          stale-issue-label: stale
+          stale-pr-label: stale
